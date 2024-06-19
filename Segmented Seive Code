@@ -1,0 +1,41 @@
+//if we are asked to find all the prime numbers in the range [L,R] OF small size i.e (R-L+1) = 1e7 (approx) but R is very large R=1e14 (approx) then we have to use Segmented Seive
+
+//logic =>  generate all prime factors uptill sqrt(R) then use these primes to mark all composite numbers in the segment [L,R]
+
+//CODE
+
+//code for simple sieve function for [L,R] where R<=1e7
+vector<int> seive(int n)
+{
+    vector<bool>isPrime(n+1,1);
+    isPrime[0]=isPrime[1]=0;
+    for(int i=2;i*i<=n;i++)
+    {
+        if(isPrime[i])
+        {
+            for(int j=i*i;j<=n;j+=i)
+            {
+                isPrime[j]=0;
+            }
+        }
+    }
+    return isPrime;
+}
+
+
+vector<bool> getPrimesInRange(long long L,long long R)
+{
+    vector<bool>prime=seive(sqrt(R));
+    vector<bool>isPrime(R-L+1,true);
+
+    for(long long i=2;i*i<=R;i++)
+    {
+        if(!prime[i])continue;
+        for(long long j=max(i*i,(L+i-1)/i*i);j<=R;j+=i)
+        {
+            isPrime[j-L]=false;
+        }
+    }
+    if(L==1)isPrime[0]=false;
+    return isPrime;
+}
