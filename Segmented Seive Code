@@ -23,7 +23,7 @@ vector<int> seive(int n)
 }
 
 
-vector<bool> getPrimesInRange(long long L,long long R)
+vector<bool> getPrimesInRange(long long L,long long R)  //this the main logic 
 {
     vector<bool>prime=seive(sqrt(R));
     vector<bool>isPrime(R-L+1,true);
@@ -38,4 +38,12 @@ vector<bool> getPrimesInRange(long long L,long long R)
     }
     if(L==1)isPrime[0]=false;
     return isPrime;
+}
+
+//this is the main function which will display you the prime numbers between [L,R]
+vector<bool>ans=getPrimesInRange(L,R);
+for(int i=0;i<ans.size();i++)
+{
+    if(ans[i]==true)
+    cout<<L+i<<" ";
 }
