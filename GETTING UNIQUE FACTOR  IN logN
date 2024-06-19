@@ -1,0 +1,38 @@
+const ll MAX = 1e6 + 5;
+bool prime[MAX]; // Is that number prime or not
+ll spf[MAX]; // Smallest prime Factor of that number
+
+void sieve() {
+
+	fill(prime, prime + MAX, true);
+	for (ll i = 1; i < MAX; i++)
+		spf[i] = i;
+	prime[0] = prime[1] = false;
+
+	for (ll i = 2; i * i < MAX; i++) {
+		if (prime[i]) {
+			for (ll j = i * i ; j < MAX ; j += i) {
+				if (prime[j])
+					spf[j] = i;
+				prime[j] = false;
+			}
+		}
+	}
+}
+
+
+vector<int> getFactoriztion(int x){
+    vector<int>ret;
+    unordered_map<int,int>mp;
+    while(x!=1)
+    {
+        mp[spf[x]]++;
+        x=x/spf[x];
+    }
+
+    for(auto it:mp)
+    {
+        ret.push_back(it.first);
+    }
+    return ret;
+}
